@@ -334,12 +334,16 @@ class TestScipySimulatorMultiple(TestScipySimulatorBase):
                         [90, 100, 110, 5, 6]]
         self.sim.run(initials=initials, param_values=param_values)
 
+    @unittest.skipIf(sys.version_info.major < 3,
+                     'Parallel execution requires Python >= 3.3')
     def test_parallel_vode(self):
         initials = [[10, 20, 30], [50, 60, 70]]
         base_res = self.sim.run(initials=initials)
         res = self.sim.run(initials=initials, num_processors=2)
         assert np.allclose(res.species, base_res.species)
 
+    @unittest.skipIf(sys.version_info.major < 3,
+                     'Parallel execution requires Python >= 3.3')
     def test_parallel_vode_jacobian(self):
         initials = [[10, 20, 30], [50, 60, 70]]
         sim = ScipyOdeSimulator(self.model, self.sim.tspan,
@@ -350,6 +354,8 @@ class TestScipySimulatorMultiple(TestScipySimulatorBase):
         assert np.allclose(res.species, base_res.species)
 
 
+    @unittest.skipIf(sys.version_info.major < 3,
+                     'Parallel execution requires Python >= 3.3')
     def test_parallel_lsoda(self):
         initials = [[10, 20, 30], [50, 60, 70]]
         sim = ScipyOdeSimulator(self.model, self.sim.tspan,
@@ -359,6 +365,8 @@ class TestScipySimulatorMultiple(TestScipySimulatorBase):
         res = sim.run(num_processors=2)
         assert np.allclose(res.species, base_res.species)
 
+    @unittest.skipIf(sys.version_info.major < 3,
+                     'Parallel execution requires Python >= 3.3')
     def test_parallel_lsoda_jacobian(self):
         initials = [[10, 20, 30], [50, 60, 70]]
         sim = ScipyOdeSimulator(self.model, self.sim.tspan,
