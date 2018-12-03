@@ -164,6 +164,7 @@ class BnglBuilder(Builder):
                 p_value = p.get('value').replace('10^', '1e')
                 self.parameter(name=p_name, value=p_value)
             elif p.get('type') == 'ConstantExpression':
+                p.get('value').replace('^', '**')
                 self.expression(name=p_name,
                                 expr=self._eval_in_model_env(p.get('value')))
             else:
@@ -317,7 +318,7 @@ class BnglBuilder(Builder):
             rule.rate_reverse = rev_rate
 
     def _parse_expressions(self):
-        expr_namespace = {p.name: p.value for p in self.model.parameters}
+        expr_namespace = {p.name: p for p in self.model.parameters}
         expr_namespace.update({o.name: o for o in
                                self.model.observables})
 
