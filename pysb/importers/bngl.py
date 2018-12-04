@@ -162,11 +162,11 @@ class BnglBuilder(Builder):
             p_name = p.get('id')
             if p.get('type') == 'Constant':
                 p_value = p.get('value').replace('10^', '1e')
-                self.parameter(name=p_name, value=p_value)
+                p_value = self.parameter(name=p_name, value=p_value)
             elif p.get('type') == 'ConstantExpression':
                 p.get('value').replace('^', '**')
                 self.expression(name=p_name,
-                                expr=self._eval_in_model_env(p.get('value')))
+                                expr=self._eval_in_model_env(p_value))
             else:
                 self._warn_or_except('Parameter %s has unknown type: %s' %
                                      (p_name, p.get('type')))
