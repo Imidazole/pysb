@@ -162,9 +162,9 @@ class BnglBuilder(Builder):
             p_name = p.get('id')
             if p.get('type') == 'Constant':
                 p_value = p.get('value').replace('10^', '1e')
-                p_value = self.parameter(name=p_name, value=p_value)
+                self.parameter(name=p_name, value=p_value)
             elif p.get('type') == 'ConstantExpression':
-                p.get('value').replace('^', '**')
+                p_value = p.get('value').replace('^', '**')
                 self.expression(name=p_name,
                                 expr=self._eval_in_model_env(p_value))
             else:
